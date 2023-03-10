@@ -18,11 +18,33 @@ inquirer
 //ADD EMPLOYEE, rtemove emplooyee, update, update empolyee manager
 //DO same thing for department and role
       {name:"Add A Department",
-       value:"ADD_A_DEPARTMENT" }
+       value:"ADD_A_DEPARTMENT" },
       {name:"Add An Employee", 
-    value:}
-      "Update An Employee Role", 
-      "Log Out"
+    value:"ADD_A_EMPLOYEE"},
+     {name: "Update An Employee Role",
+    value:"UPDATE_A_EMPLOYEE_ROLE"},
+      {name:"Log Out",
+      value:"LOG_OUT"},
     ]
 }])
+.then (res => {
+  let prompt = res.prompt;
+  switch (prompt){
+    case "VIEW_ALL_DEPARTMENT": 
+    viewDepartments();
+    break;
+    case "VIEW_ALL_MANAGER":
+      viewManagers();
+    break;
+  }
+} )
+
+function viewDepartments() {
+  db.findAllDepartments()
+    .then(([rows]) => {
+      let departments = rows;
+      console.table(departments);
+    })
+    .then(() => loadMainPrompts());
+}
 //,then for choice
