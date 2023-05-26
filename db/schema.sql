@@ -1,19 +1,29 @@
-CREATE TABLE department (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR (30)
+DROP DATABASE IF EXISTS tracker_db;
+CREATE DATABASE tracker_db;
+
+USE tracker_db;
+
+CREATE TABLE departments (
+  id INT NOT NULL AUTO_INCREMENT,
+  dep_name VARCHAR(30) NOT NULL,
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE roles (
-    id INT AUTO AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR (30),
-    salary DECIMAL,
-    department_id INT
+  id INT AUTO_INCREMENT,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL NOT NULL,
+  department_id INT NOT NULL,
+  FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY(id)
 );
 
-CREATE TABLE employee (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR (30) NOT NULL,
-    last_name VARCHAR (30) NOT NULL,
-    role_id INT,
-    manager_id INT
+CREATE TABLE employees (
+  id INT AUTO_INCREMENT,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  role_id INT NOT NULL,
+  is_supervisor BOOLEAN,
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY(id)
 );
